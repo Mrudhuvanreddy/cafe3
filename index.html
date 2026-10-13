@@ -105,8 +105,9 @@
         <a href="json.html">JSON</a> |
         <a href="post.html">POST</a> |
         <a href="typescript-demo.html">TypeScript (W11)</a> |
-        <a href="week12.html">Angular (W12)</a> |
-        <a href="week13-14.html">Angular SPA (W13-14)</a>
+        <a href="week12-components.html">Week 12 (Components)</a> |
+        <a href="week13-forms.html">Week 13 (Forms)</a> |
+        <a href="week14-routing-services.html">Week 14 (Routing & Services)</a>
     </nav>
 </header>
 
@@ -120,9 +121,10 @@
 
         <!-- Action Links -->
         <div class="hero-actions">
-            <a href="catalogue.html" class="btn-primary" style="padding: 10px 22px; font-size: 14px;">Explore Catalogue 📋</a>
-            <a href="week12.html" class="btn-secondary" style="padding: 10px 22px; font-size: 14px; background: #0284c7; color: white;">⚡ Week 12: Angular Components</a>
-            <a href="week13-14.html" class="btn-secondary" style="padding: 10px 22px; font-size: 14px; background: #0369a1; color: white;">🚀 Weeks 13-14: Angular SPA</a>
+            <a href="catalogue.html" class="btn-primary" style="padding: 10px 20px; font-size: 13px;">Explore Catalogue 📋</a>
+            <a href="week12-components.html" class="btn-secondary" style="padding: 10px 20px; font-size: 13px; background: #0284c7; color: white;">⚡ Week 12 (Components)</a>
+            <a href="week13-forms.html" class="btn-secondary" style="padding: 10px 20px; font-size: 13px; background: #0369a1; color: white;">📝 Week 13 (Forms)</a>
+            <a href="week14-routing-services.html" class="btn-secondary" style="padding: 10px 20px; font-size: 13px; background: #075985; color: white;">🚀 Week 14 (Routing & Services)</a>
         </div>
     </div>
 
@@ -132,24 +134,36 @@
         <!-- Week 12 Featured Card -->
         <div class="angular-card">
             <span class="lab-badge">Week 12 Experiment</span>
-            <h3>Angular Components, Binding & Directives</h3>
+            <h3>Week 12: Angular Components & Directives</h3>
             <p style="font-size: 13px; color: #334155; line-height: 1.5;">
                 Demonstrates Angular Components, Interpolation <code>{{ '{{ }}' }}</code>, Property Binding <code>[disabled]</code>, Event Binding <code>(click)</code>, Two-Way Data Binding <code>[(ngModel)]</code>, and Directives (<code>*ngIf</code>, <code>*ngFor</code>, <code>*ngSwitch</code>, <code>[ngClass]</code>).
             </p>
-            <a href="week12.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
-                Open Week 12 Interactive Demo →
+            <a href="week12-components.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
+                Open Week 12 (Components) Demo →
             </a>
         </div>
 
-        <!-- Week 13-14 Featured Card -->
+        <!-- Week 13 Featured Card -->
         <div class="angular-card">
-            <span class="lab-badge">Weeks 13-14 Experiment</span>
-            <h3>Angular Forms, Routing & Services (SPA)</h3>
+            <span class="lab-badge">Week 13 Experiment</span>
+            <h3>Week 13: Angular Forms & Validation</h3>
             <p style="font-size: 13px; color: #334155; line-height: 1.5;">
-                Demonstrates Single-Page Application (SPA) with Angular Routing (<code>&lt;router-outlet&gt;</code>), Singleton Service (<code>@Injectable CafeService</code>) with Dependency Injection, and Template-Driven Forms with live validation states.
+                Template-driven Angular Form (`#orderForm="ngForm"`) with live validations (`required`, `minlength`, `email`, `pattern`), real-time diagnostic flags (`$valid`, `$invalid`, `$touched`, `$dirty`), error alerts, and submission handling.
             </p>
-            <a href="week13-14.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
-                Open Weeks 13-14 SPA Demo →
+            <a href="week13-forms.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
+                Open Week 13 (Forms) Demo →
+            </a>
+        </div>
+
+        <!-- Week 14 Featured Card -->
+        <div class="angular-card">
+            <span class="lab-badge">Week 14 Experiment</span>
+            <h3>Week 14: Angular Routing & Services (SPA)</h3>
+            <p style="font-size: 13px; color: #334155; line-height: 1.5;">
+                Single-Page Application (SPA) with Angular Routing (`<router-outlet>`), client-side transitions without reload, and singleton `CafeService` dependency injection managing orders and data.
+            </p>
+            <a href="week14-routing-services.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
+                Open Week 14 (Routing & Services) Demo →
             </a>
         </div>
 
@@ -192,16 +206,7 @@
             </table>
         </div>
 
-        <!-- Section 3: Contact & Location -->
-        <div class="card" style="margin: 0; max-width: 100%;">
-            <h3 style="text-align: left;">Contact & Location</h3>
-            <p style="font-size: 14px; margin: 8px 0;"><b>Address:</b> 123 Coffee Street, Downtown, Hyderabad</p>
-            <p style="font-size: 14px; margin: 8px 0;"><b>Phone:</b> +91 98765 43210</p>
-            <p style="font-size: 14px; margin: 8px 0;"><b>Email:</b> hello@thewavecafe.com</p>
-            <p style="font-size: 14px; margin: 8px 0;"><b>Wi-Fi:</b> Free High-Speed Guest Wi-Fi available!</p>
-        </div>
-
-        <!-- Section 4: Week 8 Experiment: Async Text Loading -->
+        <!-- Section 3: Week 8 Experiment -->
         <div class="card" style="margin: 0; max-width: 100%;">
             <span class="lab-badge" style="background: #475569;">Week 8 Experiment</span>
             <h3 style="text-align: left; margin-top: 4px;">Asynchronous Data Loading</h3>
@@ -244,12 +249,9 @@ function loadText() {
                     if (xhr.status === 200 || xhr.status === 0) {
                         textDataElem.innerText = xhr.responseText;
                     } else {
-                        textDataElem.innerText = "THE WAVE ☕ Cafe\n123 Coffee Street, Downtown, Hyderabad\nSpeciality: Fresh Roasted Single-Origin Arabica & Artisan Pastries\nOpen Daily: 8:00 AM - 10:00 PM.";
+                        textDataElem.innerText = "THE WAVE ☕ Cafe\n123 Coffee Street, Downtown, Hyderabad\nOpen Daily: 8:00 AM - 10:00 PM.";
                     }
                 }
-            };
-            xhr.onerror = function() {
-                textDataElem.innerText = "THE WAVE ☕ Cafe\n123 Coffee Street, Downtown, Hyderabad\nOpen Daily: 8:00 AM - 10:00 PM.";
             };
             xhr.send();
         });

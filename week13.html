@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE ☕ Cafe - Week 13: Angular Forms & Validation</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Angular 1.x / Standalone Runtime for instant offline browser execution -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+        .forms-container {
+            max-width: 1050px;
+            margin: 25px auto;
+            text-align: left;
+        }
+        .concept-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #bae6fd;
+        }
+        .form-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .card-panel {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .card-panel h3 {
+            margin-top: 0;
+            color: #0077b6;
+            font-size: 18px;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 8px;
+        }
+        .flag-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-right: 4px;
+        }
+        .flag-valid { background: #dcfce7; color: #166534; }
+        .flag-invalid { background: #fee2e2; color: #991b1b; }
+        .flag-touched { background: #fef3c7; color: #92400e; }
+        .flag-pristine { background: #f1f5f9; color: #475569; }
+        .input-invalid {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+        .error-message {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .code-view {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 18px;
+            border-radius: 8px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 10px;
+            white-space: pre;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #334155;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #0077b6;
+            color: white;
+        }
+    </style>
+</head>
+<body ng-app="formApp" ng-controller="Week13Controller">
+
+<header>
+    <h1>THE WAVE ☕ Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript (W11)</a> |
+        <a href="week12-components.html">Week 12 (Components)</a> |
+        <a href="week13-forms.html" class="active">Week 13 (Forms)</a> |
+        <a href="week14-routing-services.html">Week 14 (Routing & Services)</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Week 13: Angular Forms & Validation</h2>
+    <p class="subtext">
+        Template-Driven Angular Form implementing two-way binding, validation constraints, control states, and error handling.
+    </p>
+
+    <div class="forms-container">
+        <!-- Syllabus Badges -->
+        <div style="margin-bottom: 15px;">
+            <span class="concept-badge">Week 13 Experiment</span>
+            <span class="concept-badge">Template-Driven Form</span>
+            <span class="concept-badge">[(ngModel)] Two-Way Binding</span>
+            <span class="concept-badge">Validators: required, minlength, email, pattern</span>
+            <span class="concept-badge">States: $valid, $invalid, $touched, $dirty</span>
+            <span class="concept-badge">Conditional Error Alerts</span>
+        </div>
+
+        <div class="form-layout">
+            <!-- Left: The Interactive Angular Form -->
+            <div class="card-panel">
+                <h3>Cafe Customer Order & Membership Form</h3>
+                <p style="font-size: 13px; color: #64748b;">
+                    Fill out the form below. As you interact, the validation states on the right update in real-time.
+                </p>
+
+                <form name="orderForm" ng-submit="submitOrder(orderForm)" novalidate>
+                    <!-- 1. Customer Name -->
+                    <div class="form-group">
+                        <label for="fullName">Customer Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" ng-model="formData.fullName"
+                               required ng-minlength="3"
+                               ng-class="{'input-invalid': orderForm.fullName.$invalid && orderForm.fullName.$touched}"
+                               placeholder="e.g. Aarav Sharma">
+                        <div class="error-message" ng-show="orderForm.fullName.$invalid && orderForm.fullName.$touched">
+                            ⚠ Full Name is required (minimum 3 characters).
+                        </div>
+                    </div>
+
+                    <!-- 2. Email Address -->
+                    <div class="form-group">
+                        <label for="emailAddr">Email Address *</label>
+                        <input type="email" id="emailAddr" name="email" ng-model="formData.email"
+                               required
+                               ng-class="{'input-invalid': orderForm.email.$invalid && orderForm.email.$touched}"
+                               placeholder="e.g. aarav@example.com">
+                        <div class="error-message" ng-show="orderForm.email.$invalid && orderForm.email.$touched">
+                            ⚠ Please enter a valid email address format.
+                        </div>
+                    </div>
+
+                    <!-- 3. Phone Number -->
+                    <div class="form-group">
+                        <label for="phoneNum">Phone Number (10 Digits) *</label>
+                        <input type="text" id="phoneNum" name="phone" ng-model="formData.phone"
+                               required ng-pattern="/^[0-9]{10}$/"
+                               ng-class="{'input-invalid': orderForm.phone.$invalid && orderForm.phone.$touched}"
+                               placeholder="10-digit mobile number">
+                        <div class="error-message" ng-show="orderForm.phone.$invalid && orderForm.phone.$touched">
+                            ⚠ Please enter a valid 10-digit mobile number.
+                        </div>
+                    </div>
+
+                    <!-- 4. Menu Item Selection -->
+                    <div class="form-group">
+                        <label for="itemSelect">Select Cafe Specialty *</label>
+                        <select id="itemSelect" name="itemName" ng-model="formData.itemName" required>
+                            <option value="Cappuccino">Cappuccino (₹120)</option>
+                            <option value="Latte">Latte (₹140)</option>
+                            <option value="Cold Brew Coffee">Cold Brew Coffee (₹150)</option>
+                            <option value="Wood-Fired Pizza">Wood-Fired Pizza (₹250)</option>
+                            <option value="Artisan Croissant">Artisan Croissant (₹100)</option>
+                            <option value="Dark Chocolate Cake">Dark Chocolate Cake (₹180)</option>
+                        </select>
+                    </div>
+
+                    <!-- 5. Quantity & Table -->
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="qty">Quantity (1-10) *</label>
+                            <input type="number" id="qty" name="quantity" ng-model="formData.quantity" min="1" max="10" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="tbl">Table Number (1-30) *</label>
+                            <input type="number" id="tbl" name="tableNumber" ng-model="formData.tableNumber" min="1" max="30" required>
+                        </div>
+                    </div>
+
+                    <!-- 6. Membership Tier -->
+                    <div class="form-group">
+                        <label>Membership Tier:</label>
+                        <div style="display: flex; gap: 15px; margin-top: 6px;">
+                            <label><input type="radio" name="tier" ng-model="formData.membershipTier" value="Silver"> Silver</label>
+                            <label><input type="radio" name="tier" ng-model="formData.membershipTier" value="Gold"> Gold (10% off)</label>
+                            <label><input type="radio" name="tier" ng-model="formData.membershipTier" value="Platinum"> Platinum (20% off)</label>
+                        </div>
+                    </div>
+
+                    <!-- 7. Agreement Checkbox -->
+                    <div style="margin: 15px 0;">
+                        <label>
+                            <input type="checkbox" name="agree" ng-model="formData.agreeTerms" required>
+                            I agree to cafe terms & receive order SMS updates *
+                        </label>
+                        <div class="error-message" ng-show="orderForm.agree.$invalid && orderForm.agree.$touched">
+                            ⚠ You must agree to proceed.
+                        </div>
+                    </div>
+
+                    <!-- Submit Button disabled if form is invalid -->
+                    <button type="submit" class="btn-primary" ng-disabled="orderForm.$invalid" style="width: 100%;">
+                        Submit Order [disabled]="{{ '{{ orderForm.$invalid }}' }}"
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Real-Time Diagnostic Dashboard -->
+            <div class="card-panel" style="background: #f8fafc;">
+                <h3>Form Diagnostics & Validation States</h3>
+                <p style="font-size: 13px; color: #64748b;">
+                    Angular form controllers maintain real-time diagnostic flags:
+                </p>
+
+                <div style="margin-bottom: 14px; font-size: 13px;">
+                    <strong>Overall Form:</strong><br>
+                    $valid: <span class="flag-pill" ng-class="orderForm.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ orderForm.$valid ? "TRUE" : "FALSE" }}' }}</span>
+                    $dirty: <span class="flag-pill" ng-class="orderForm.$dirty ? 'flag-touched' : 'flag-pristine'">{{ '{{ orderForm.$dirty ? "DIRTY" : "PRISTINE" }}' }}</span>
+                    $submitted: <span class="flag-pill" ng-class="orderForm.$submitted ? 'flag-valid' : 'flag-pristine'">{{ '{{ orderForm.$submitted ? "YES" : "NO" }}' }}</span>
+                </div>
+
+                <div style="margin-bottom: 14px; font-size: 13px;">
+                    <strong>Full Name Control:</strong><br>
+                    $touched: <span class="flag-pill" ng-class="orderForm.fullName.$touched ? 'flag-touched' : 'flag-pristine'">{{ '{{ orderForm.fullName.$touched ? "TRUE" : "FALSE" }}' }}</span>
+                    $valid: <span class="flag-pill" ng-class="orderForm.fullName.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ orderForm.fullName.$valid ? "VALID" : "INVALID" }}' }}</span>
+                </div>
+
+                <div style="margin-bottom: 14px; font-size: 13px;">
+                    <strong>Email Control:</strong><br>
+                    $touched: <span class="flag-pill" ng-class="orderForm.email.$touched ? 'flag-touched' : 'flag-pristine'">{{ '{{ orderForm.email.$touched ? "TRUE" : "FALSE" }}' }}</span>
+                    $valid: <span class="flag-pill" ng-class="orderForm.email.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ orderForm.email.$valid ? "VALID" : "INVALID" }}' }}</span>
+                </div>
+
+                <div style="margin-bottom: 14px; font-size: 13px;">
+                    <strong>Phone Control:</strong><br>
+                    $touched: <span class="flag-pill" ng-class="orderForm.phone.$touched ? 'flag-touched' : 'flag-pristine'">{{ '{{ orderForm.phone.$touched ? "TRUE" : "FALSE" }}' }}</span>
+                    $valid: <span class="flag-pill" ng-class="orderForm.phone.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ orderForm.phone.$valid ? "VALID" : "INVALID" }}' }}</span>
+                </div>
+
+                <div style="background: #0f172a; color: #38bdf8; padding: 12px; border-radius: 6px; font-family: Consolas, monospace; font-size: 12px; margin-top: 15px; white-space: pre-wrap;">
+Live Model Value (formData):
+{{ '{{ formData | json }}' }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Submitted Orders Table -->
+        <div class="card-panel" style="margin-top: 25px;">
+            <h3>Active Submitted Orders ({{ '{{ submittedOrders.length }}' }})</h3>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Item & Qty</th>
+                        <th>Table</th>
+                        <th>Tier</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in submittedOrders">
+                        <td>{{ '{{ $index + 1 }}' }}</td>
+                        <td><strong>{{ '{{ order.fullName }}' }}</strong></td>
+                        <td>{{ '{{ order.phone }}' }}<br><small>{{ '{{ order.email }}' }}</small></td>
+                        <td>{{ '{{ order.itemName }}' }} (x{{ '{{ order.quantity }}' }})</td>
+                        <td>Table {{ '{{ order.tableNumber }}' }}</td>
+                        <td>{{ '{{ order.membershipTier }}' }}</td>
+                        <td style="color: #0077b6; font-weight: bold;">₹{{ '{{ order.total }}' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Code Inspection / Tabbed Source Viewer -->
+        <div class="card-panel" style="margin-top: 25px;">
+            <h3>Week 13 Source Code & Lab Revision</h3>
+            <div class="tab-buttons">
+                <button class="tab-btn" ng-class="{'active': activeTab === 'ts'}" ng-click="activeTab = 'ts'">week13-forms.ts</button>
+                <button class="tab-btn" ng-class="{'active': activeTab === 'viva'}" ng-click="activeTab = 'viva'">Week 13 Viva Questions</button>
+            </div>
+
+            <div class="code-view" ng-show="activeTab === 'ts'">import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-week13-forms',
+  templateUrl: './week13-forms.html'
+})
+export class Week13Component {
+  formData = {
+    fullName: '',
+    email: '',
+    phone: '',
+    itemName: 'Cappuccino',
+    quantity: 1,
+    tableNumber: 1,
+    membershipTier: 'Gold',
+    agreeTerms: false
+  };
+
+  onSubmit(form: NgForm): void {
+    if (form.valid) {
+      alert(`Order submitted for ${this.formData.fullName}!`);
+      form.resetForm();
+    }
+  }
+}</div>
+
+            <div class="code-view" ng-show="activeTab === 'viva'">LAB VIVA QUICK REVISION - WEEK 13:
+
+Q1: What are the two types of forms in Angular?
+A:
+1. Template-Driven Forms: Simple forms where validation logic is defined inside the template using directives like [(ngModel)], required, and #form="ngForm".
+2. Reactive Forms: More scalable and testable, created programmatically in the component class using FormGroup, FormControl, and FormBuilder.
+
+Q2: What is the purpose of #orderForm="ngForm"?
+A: It creates a template reference variable that exports the NgForm directive instance, allowing access to the form's validity ($valid), dirty state ($dirty), and submission methods.
+
+Q3: Explain the Angular form validation states.
+A:
+- valid: All validation constraints are satisfied.
+- invalid: At least one validation rule failed.
+- pristine: The user has not yet changed the control's value.
+- dirty: The user has modified the control's value.
+- touched: The user has focused and blurred out of the input element.
+- untouched: The user has not yet lost focus from the input element.</div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE ☕ Cafe. All Rights Reserved.</p>
+</footer>
+
+<script>
+    var app = angular.module("formApp", []);
+    app.controller("Week13Controller", function($scope) {
+        $scope.activeTab = "ts";
+        $scope.formData = {
+            fullName: "Aarav Sharma",
+            email: "aarav@example.com",
+            phone: "9876543210",
+            itemName: "Cappuccino",
+            quantity: 2,
+            tableNumber: 4,
+            membershipTier: "Gold",
+            agreeTerms: true
+        };
+
+        $scope.submittedOrders = [
+            {
+                fullName: "Priya Patel",
+                email: "priya@example.com",
+                phone: "9812345678",
+                itemName: "Cold Brew Coffee",
+                quantity: 1,
+                tableNumber: 7,
+                membershipTier: "Platinum",
+                total: 120
+            }
+        ];
+
+        $scope.prices = {
+            "Cappuccino": 120,
+            "Latte": 140,
+            "Cold Brew Coffee": 150,
+            "Wood-Fired Pizza": 250,
+            "Artisan Croissant": 100,
+            "Dark Chocolate Cake": 180
+        };
+
+        $scope.submitOrder = function(form) {
+            if (form.$valid) {
+                var unit = $scope.prices[$scope.formData.itemName] || 100;
+                var discount = $scope.formData.membershipTier === "Platinum" ? 0.8 : ($scope.formData.membershipTier === "Gold" ? 0.9 : 1.0);
+                var total = Math.round(unit * $scope.formData.quantity * discount);
+
+                $scope.submittedOrders.unshift({
+                    fullName: $scope.formData.fullName,
+                    email: $scope.formData.email,
+                    phone: $scope.formData.phone,
+                    itemName: $scope.formData.itemName,
+                    quantity: $scope.formData.quantity,
+                    tableNumber: $scope.formData.tableNumber,
+                    membershipTier: $scope.formData.membershipTier,
+                    total: total
+                });
+
+                alert("✅ Order placed successfully for " + $scope.formData.fullName + "!\nTotal: ₹" + total);
+
+                // Reset form
+                $scope.formData = {
+                    fullName: "",
+                    email: "",
+                    phone: "",
+                    itemName: "Cappuccino",
+                    quantity: 1,
+                    tableNumber: 1,
+                    membershipTier: "Gold",
+                    agreeTerms: false
+                };
+                form.$setPristine();
+                form.$setUntouched();
+            }
+        };
+    });
+</script>
+
+</body>
+</html>
