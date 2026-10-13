@@ -13,8 +13,8 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist",
-            "index": "week13-14.html",
-            "browser": "week13-14.component.ts",
+            "index": "week14-routing-services.html",
+            "browser": "week14-routing-services.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.json",
             "inlineStyleLanguage": "css",

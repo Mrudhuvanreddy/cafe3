@@ -31,7 +31,7 @@ export interface IMenuItem {
   selector: 'app-week12',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './week12.html',
+  templateUrl: './week12-components.html',
   styleUrls: ['./style.css']
 })
 export class Week12Component {

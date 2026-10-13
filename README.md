@@ -101,16 +101,10 @@ Then open:
 ├── typescript-demo.html            # Week 11 TypeScript Demo Page
 ├── week12-components.html          # Week 12 Angular Components & Directives (Demo)
 ├── week12-components.ts            # Week 12 Angular Component Source
-├── week12.html                     # Week 12 Alias
-├── week12.component.ts             # Week 12 Component Alias
 ├── week13-forms.html               # Week 13 Angular Forms & Validation (Demo)
 ├── week13-forms.ts                 # Week 13 Angular Form Component Source
-├── week13.html                     # Week 13 Alias
-├── week13.component.ts             # Week 13 Component Alias
 ├── week14-routing-services.html    # Week 14 Angular Routing & Services SPA (Demo)
 ├── week14-routing-services.ts      # Week 14 Angular SPA Component Source
-├── week14.html                     # Week 14 Alias
-├── week14.component.ts             # Week 14 Component Alias
 ├── cafe.service.ts                 # Week 14 Angular Singleton Service
 ├── app.routes.ts                   # Week 14 Angular Routing Configuration
 ├── package.json                    # Project Metadata & Dependencies
