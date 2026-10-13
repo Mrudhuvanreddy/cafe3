@@ -1,0 +1,23 @@
+{
+  "name": "the-wave-cafe-web-lab",
+  "version": "1.0.0",
+  "description": "Essentials of Web Programming Lab (Weeks 1 to 14) - THE WAVE Cafe",
+  "scripts": {
+    "start": "python server.py",
+    "serve": "python server.py",
+    "ng:build": "tsc"
+  },
+  "dependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
+    "@angular/router": "^19.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.8.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2"
+  }
+}

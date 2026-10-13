@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE ☕ Cafe - Week 13-14: Angular Forms, Routing & Services (SPA)</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Angular 1.x / Standalone Runtime for instant offline browser execution -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+        .spa-container {
+            max-width: 1100px;
+            margin: 25px auto;
+            text-align: left;
+        }
+        .spa-nav-bar {
+            display: flex;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .spa-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 14px 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #4b5563;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .spa-nav-item:hover {
+            background: #f8fafc;
+            color: #0077b6;
+        }
+        .spa-nav-item.active {
+            color: #0077b6;
+            border-bottom-color: #0077b6;
+            background: #f0f9ff;
+        }
+        .outlet-box {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 28px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            min-height: 420px;
+        }
+        .concept-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #bae6fd;
+        }
+        .flag-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-right: 4px;
+        }
+        .flag-valid { background: #dcfce7; color: #166534; }
+        .flag-invalid { background: #fee2e2; color: #991b1b; }
+        .flag-touched { background: #fef3c7; color: #92400e; }
+        .flag-pristine { background: #f1f5f9; color: #475569; }
+        .input-invalid {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+        .error-message {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .specialty-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px;
+            background: #f8fafc;
+        }
+        .specialty-card h4 {
+            margin: 0 0 6px 0;
+            color: #0077b6;
+        }
+        .code-view {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 18px;
+            border-radius: 8px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 10px;
+            white-space: pre;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #334155;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #0077b6;
+            color: white;
+        }
+    </style>
+</head>
+<body ng-app="spaApp" ng-controller="SpaController">
+
+<header>
+    <h1>THE WAVE ☕ Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html" class="active">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Weeks 13 & 14: Angular Forms, Routing & Services (Single-Page Application)</h2>
+    <p class="subtext">
+        Complete sample SPA demonstrating client-side route transitions, template-driven form validation, and singleton service state management.
+    </p>
+
+    <div class="spa-container">
+        <!-- Syllabus Badges -->
+        <div style="margin-bottom: 20px;">
+            <span class="concept-badge">Angular Forms (W13)</span>
+            <span class="concept-badge">[(ngModel)] & ngForm</span>
+            <span class="concept-badge">Form Validation & Error States</span>
+            <span class="concept-badge">Angular Routing (W14)</span>
+            <span class="concept-badge">&lt;router-outlet&gt; SPA</span>
+            <span class="concept-badge">@Injectable CafeService</span>
+            <span class="concept-badge">Dependency Injection</span>
+        </div>
+
+        <!-- Simulated Angular Router Navigation Bar -->
+        <div class="spa-nav-bar">
+            <div class="spa-nav-item" ng-class="{'active': currentRoute === 'home'}" ng-click="navigate('home')">
+                🏠 Home View
+            </div>
+            <div class="spa-nav-item" ng-class="{'active': currentRoute === 'catalogue'}" ng-click="navigate('catalogue')">
+                📖 Menu Catalogue
+            </div>
+            <div class="spa-nav-item" ng-class="{'active': currentRoute === 'order'}" ng-click="navigate('order')">
+                📝 Order Form (W13)
+            </div>
+            <div class="spa-nav-item" ng-class="{'active': currentRoute === 'dashboard'}" ng-click="navigate('dashboard')">
+                📊 Orders Dashboard ({{ '{{ orders.length }}' }})
+            </div>
+            <div class="spa-nav-item" ng-class="{'active': currentRoute === 'about'}" ng-click="navigate('about')">
+                ℹ️ About Cafe
+            </div>
+        </div>
+
+        <!-- Simulated <router-outlet> -->
+        <div class="outlet-box">
+            
+            <!-- ROUTE 1: HOME -->
+            <div ng-show="currentRoute === 'home'">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+                    <div>
+                        <h3 style="margin-top: 0; color: #0077b6; font-size: 24px;">Welcome to {{ '{{ cafeInfo.name }}' }}</h3>
+                        <p style="color: #64748b; margin-top: 4px;">
+                            📍 {{ '{{ cafeInfo.address }}' }} &bull; 🕒 {{ '{{ cafeInfo.openHours }}' }}
+                        </p>
+                    </div>
+                    <div>
+                        <span class="concept-badge" style="background: #ecfdf5; color: #065f46; border-color: #a7f3d0;">
+                            Data loaded from CafeService singleton
+                        </span>
+                    </div>
+                </div>
+
+                <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 18px; border-radius: 8px; margin-top: 15px;">
+                    <h4 style="margin: 0 0 6px 0; color: #0369a1;">☕ Single-Page Application (SPA) Highlights</h4>
+                    <p style="margin: 0; font-size: 14px; color: #334155;">
+                        Clicking the tabs above navigates between different views <strong>without reloading the page</strong>. 
+                        State is retained seamlessly in memory by the injected <code>CafeService</code>.
+                    </p>
+                </div>
+
+                <h4 style="margin-top: 25px; color: #1e293b;">Chef's Special Picks (Injected via CafeService):</h4>
+                <div class="specialties-grid">
+                    <div *ng-repeat="item in specialties" class="specialty-card" ng-repeat="item in specialties">
+                        <h4>{{ '{{ item.name }}' }}</h4>
+                        <p style="font-size: 13px; color: #64748b; margin: 6px 0;">{{ '{{ item.desc }}' }}</p>
+                        <div style="font-weight: bold; color: #0077b6;">₹{{ '{{ item.price }}' }}</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button class="btn-primary" ng-click="navigate('order')">
+                        Proceed to Angular Order Form (Week 13) →
+                    </button>
+                </div>
+            </div>
+
+            <!-- ROUTE 2: CATALOGUE -->
+            <div ng-show="currentRoute === 'catalogue'">
+                <h3 style="margin-top: 0; color: #0077b6;">Cafe Menu Catalogue (Loaded from CafeService)</h3>
+                <p style="font-size: 13px; color: #64748b;">
+                    Full inventory supplied through <code>CafeService.getMenu()</code>.
+                </p>
+
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <input type="text" ng-model="menuFilter" placeholder="🔍 Search menu item..." style="max-width: 300px;">
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in menu | filter:menuFilter">
+                            <td>{{ '{{ $index + 1 }}' }}</td>
+                            <td><strong>{{ '{{ item.name }}' }}</strong></td>
+                            <td>{{ '{{ item.category }}' }}</td>
+                            <td>{{ '{{ item.desc }}' }}</td>
+                            <td style="color: #0077b6; font-weight: bold;">₹{{ '{{ item.price }}' }}</td>
+                            <td>
+                                <button class="btn-secondary" style="padding: 4px 10px; font-size: 12px;" ng-click="quickOrder(item)">
+                                    Order Item
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ROUTE 3: WEEK 13 ANGULAR FORM -->
+            <div ng-show="currentRoute === 'order'">
+                <h3 style="margin-top: 0; color: #0077b6;">Week 13: Angular Template-Driven Form</h3>
+                <p style="font-size: 13px; color: #64748b;">
+                    Features two-way data binding <span class="code-syntax">[(ngModel)]</span>, validation rules, field state tracking, error messages, and submit handling.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    <!-- The Form -->
+                    <form name="cafeOrderForm" ng-submit="submitOrder(cafeOrderForm)" novalidate>
+                        <!-- 1. Customer Name -->
+                        <div class="form-group">
+                            <label for="custNameInput">Customer Full Name *</label>
+                            <input type="text" id="custNameInput" name="custName" ng-model="orderData.customerName"
+                                   required ng-minlength="3"
+                                   ng-class="{'input-invalid': cafeOrderForm.custName.$invalid && cafeOrderForm.custName.$touched}"
+                                   placeholder="e.g. John Doe">
+                            <div class="error-message" ng-show="cafeOrderForm.custName.$invalid && cafeOrderForm.custName.$touched">
+                                ⚠ Full name is required (minimum 3 characters).
+                            </div>
+                        </div>
+
+                        <!-- 2. Email Address -->
+                        <div class="form-group">
+                            <label for="emailInput">Email Address *</label>
+                            <input type="email" id="emailInput" name="email" ng-model="orderData.email"
+                                   required
+                                   ng-class="{'input-invalid': cafeOrderForm.email.$invalid && cafeOrderForm.email.$touched}"
+                                   placeholder="e.g. john@example.com">
+                            <div class="error-message" ng-show="cafeOrderForm.email.$invalid && cafeOrderForm.email.$touched">
+                                ⚠ Please enter a valid email address.
+                            </div>
+                        </div>
+
+                        <!-- 3. Phone Number -->
+                        <div class="form-group">
+                            <label for="phoneInput">Phone Number (10 digits) *</label>
+                            <input type="text" id="phoneInput" name="phone" ng-model="orderData.phone"
+                                   required ng-pattern="/^[0-9]{10}$/"
+                                   ng-class="{'input-invalid': cafeOrderForm.phone.$invalid && cafeOrderForm.phone.$touched}"
+                                   placeholder="10-digit mobile number">
+                            <div class="error-message" ng-show="cafeOrderForm.phone.$invalid && cafeOrderForm.phone.$touched">
+                                ⚠ Valid 10-digit phone number is required.
+                            </div>
+                        </div>
+
+                        <!-- 4. Menu Item Selection -->
+                        <div class="form-group">
+                            <label for="itemSelect">Select Cafe Item *</label>
+                            <select id="itemSelect" name="itemName" ng-model="orderData.itemName" required>
+                                <option ng-repeat="item in menu" value="{{ '{{ item.name }}' }}">
+                                    {{ '{{ item.name }}' }} (₹{{ '{{ item.price }}' }})
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- 5. Quantity & Table Number -->
+                        <div style="display: flex; gap: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="qtyInput">Quantity *</label>
+                                <input type="number" id="qtyInput" name="quantity" ng-model="orderData.quantity" min="1" max="10" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="tableInput">Table Number (1-30) *</label>
+                                <input type="number" id="tableInput" name="tableNumber" ng-model="orderData.tableNumber" min="1" max="30" required>
+                            </div>
+                        </div>
+
+                        <!-- 6. Special Instructions -->
+                        <div class="form-group">
+                            <label for="notesInput">Special Notes (Optional)</label>
+                            <textarea id="notesInput" ng-model="orderData.specialNotes" rows="2" placeholder="e.g. Less sugar, extra hot..."></textarea>
+                        </div>
+
+                        <!-- Submit button with [disabled] binding -->
+                        <button type="submit" class="btn-primary" ng-disabled="cafeOrderForm.$invalid" style="width: 100%;">
+                            Submit Order via Angular Form
+                        </button>
+                    </form>
+
+                    <!-- Real-Time Form State Diagnostics (Crucial for Lab Viva!) -->
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+                        <h4 style="margin-top: 0; color: #0077b6;">Angular Form State Diagnostics</h4>
+                        <p style="font-size: 13px; color: #64748b;">
+                            Inspect the live validation flags managed by Angular Form controls:
+                        </p>
+
+                        <div style="margin-bottom: 12px; font-size: 13px;">
+                            <strong>Overall Form ($valid):</strong>
+                            <span class="flag-pill" ng-class="cafeOrderForm.$valid ? 'flag-valid' : 'flag-invalid'">
+                                {{ '{{ cafeOrderForm.$valid ? "VALID" : "INVALID" }}' }}
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 12px; font-size: 13px;">
+                            <strong>Form Pristine / Dirty:</strong>
+                            <span class="flag-pill" ng-class="cafeOrderForm.$dirty ? 'flag-touched' : 'flag-pristine'">
+                                {{ '{{ cafeOrderForm.$dirty ? "DIRTY" : "PRISTINE" }}' }}
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 12px; font-size: 13px;">
+                            <strong>Customer Name Control:</strong><br>
+                            Touched: <span class="flag-pill" ng-class="cafeOrderForm.custName.$touched ? 'flag-touched' : 'flag-pristine'">{{ '{{ cafeOrderForm.custName.$touched ? "TRUE" : "FALSE" }}' }}</span>
+                            Valid: <span class="flag-pill" ng-class="cafeOrderForm.custName.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ cafeOrderForm.custName.$valid ? "VALID" : "INVALID" }}' }}</span>
+                        </div>
+
+                        <div style="margin-bottom: 12px; font-size: 13px;">
+                            <strong>Email Control:</strong><br>
+                            Touched: <span class="flag-pill" ng-class="cafeOrderForm.email.$touched ? 'flag-touched' : 'flag-pristine'">{{ '{{ cafeOrderForm.email.$touched ? "TRUE" : "FALSE" }}' }}</span>
+                            Valid: <span class="flag-pill" ng-class="cafeOrderForm.email.$valid ? 'flag-valid' : 'flag-invalid'">{{ '{{ cafeOrderForm.email.$valid ? "VALID" : "INVALID" }}' }}</span>
+                        </div>
+
+                        <div style="background: #0f172a; color: #38bdf8; padding: 10px; border-radius: 6px; font-family: Consolas, monospace; font-size: 12px; margin-top: 15px; white-space: pre-wrap;">
+Live Model Value:
+{{ '{{ orderData | json }}' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROUTE 4: ORDERS DASHBOARD (Managed by CafeService) -->
+            <div ng-show="currentRoute === 'dashboard'">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin-top: 0; color: #0077b6;">Real-Time Orders (Injected CafeService)</h3>
+                    <button class="btn-secondary" ng-click="navigate('order')">+ New Order</button>
+                </div>
+                <p style="font-size: 13px; color: #64748b;">
+                    Orders stored in singleton <code>CafeService</code> memory across SPA route changes.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Contact</th>
+                            <th>Item & Quantity</th>
+                            <th>Table</th>
+                            <th>Total Amount</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in orders">
+                            <td><strong>#{{ '{{ order.id }}' }}</strong></td>
+                            <td>{{ '{{ order.customerName }}' }}</td>
+                            <td>{{ '{{ order.phone }}' }}<br><small>{{ '{{ order.email }}' }}</small></td>
+                            <td>{{ '{{ order.itemName }}' }} <strong>(x{{ '{{ order.quantity }}' }})</strong></td>
+                            <td>Table {{ '{{ order.tableNumber }}' }}</td>
+                            <td style="color: #0077b6; font-weight: bold;">₹{{ '{{ order.orderTotal }}' }}</td>
+                            <td>{{ '{{ order.timestamp }}' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ROUTE 5: ABOUT -->
+            <div ng-show="currentRoute === 'about'">
+                <h3 style="margin-top: 0; color: #0077b6;">About {{ '{{ cafeInfo.name }}' }}</h3>
+                <p>Welcome to THE WAVE Cafe, where quality coffee meets artisanal flavor.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                    <div style="background: #f8fafc; padding: 16px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <h4 style="margin-top: 0; color: #0077b6;">📍 Location & Contact</h4>
+                        <p style="margin: 4px 0; font-size: 14px;"><strong>Address:</strong> {{ '{{ cafeInfo.address }}' }}</p>
+                        <p style="margin: 4px 0; font-size: 14px;"><strong>Phone:</strong> {{ '{{ cafeInfo.phone }}' }}</p>
+                        <p style="margin: 4px 0; font-size: 14px;"><strong>Email:</strong> {{ '{{ cafeInfo.email }}' }}</p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 16px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <h4 style="margin-top: 0; color: #0077b6;">🕒 Working Hours</h4>
+                        <p style="margin: 4px 0; font-size: 14px;">Monday – Sunday: 8:00 AM – 10:00 PM</p>
+                        <p style="margin: 4px 0; font-size: 14px;">High-speed Wi-Fi & cozy outdoor seating available.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Code Inspection / Tabbed Source Viewer -->
+        <div class="binding-card" style="margin-top: 25px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px;">
+            <h3 style="margin-top: 0; color: #0077b6;">Week 13-14 TypeScript Source Files (Stored in 2222 Folder)</h3>
+            <p style="font-size: 13px; color: #64748b;">
+                Production Angular source code files are saved directly in this folder: <a href="cafe.service.ts"><code>cafe.service.ts</code></a>, <a href="app.routes.ts"><code>app.routes.ts</code></a>, and <a href="week13-14.component.ts"><code>week13-14.component.ts</code></a>.
+            </p>
+
+            <div class="tab-buttons">
+                <button class="tab-btn" ng-class="{'active': activeTab === 'service'}" ng-click="activeTab = 'service'">cafe.service.ts (Service)</button>
+                <button class="tab-btn" ng-class="{'active': activeTab === 'routes'}" ng-click="activeTab = 'routes'">app.routes.ts (Routing)</button>
+                <button class="tab-btn" ng-class="{'active': activeTab === 'forms'}" ng-click="activeTab = 'forms'">week13-14.component.ts (Forms & SPA)</button>
+                <button class="tab-btn" ng-class="{'active': activeTab === 'viva'}" ng-click="activeTab = 'viva'">Lab Viva Questions (W13-14)</button>
+            </div>
+
+            <!-- Tab 1: Service Code -->
+            <div class="code-view" ng-show="activeTab === 'service'">import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root' // Singleton service available across entire application
+})
+export class CafeService {
+  private menu = [
+    { id: 1, name: 'Cappuccino', price: 120, category: 'Hot Coffee' },
+    { id: 2, name: 'Cold Brew', price: 150, category: 'Cold Coffee' },
+    { id: 3, name: 'Wood-Fired Pizza', price: 250, category: 'Snacks' }
+  ];
+
+  private orders: any[] = [];
+
+  getMenu() { return [...this.menu]; }
+  
+  getOrders() { return [...this.orders]; }
+
+  addOrder(order: any) {
+    order.id = 100 + this.orders.length + 1;
+    order.timestamp = new Date().toLocaleTimeString();
+    this.orders.unshift(order);
+    return order;
+  }
+}</div>
+
+            <!-- Tab 2: Routing Code -->
+            <div class="code-view" ng-show="activeTab === 'routes'">import { Routes } from '@angular/router';
+import { HomeComponent } from './home.component';
+import { MenuComponent } from './menu.component';
+import { OrderFormComponent } from './order-form.component';
+import { DashboardComponent } from './dashboard.component';
+import { AboutComponent } from './about.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'menu', component: MenuComponent },
+  { path: 'order', component: OrderFormComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'about', component: AboutComponent },
+  { path: '**', redirectTo: 'home' } // Wildcard fallback
+];</div>
+
+            <!-- Tab 3: Forms Component Code -->
+            <div class="code-view" ng-show="activeTab === 'forms'">import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { CafeService } from './cafe.service';
+
+@Component({
+  selector: 'app-order-form',
+  templateUrl: './order-form.html'
+})
+export class OrderFormComponent implements OnInit {
+  menuItems: any[] = [];
+  formData = { customerName: '', email: '', phone: '', itemName: 'Cappuccino', quantity: 1, tableNumber: 1 };
+
+  // Injecting CafeService via constructor
+  constructor(private cafeService: CafeService) {}
+
+  ngOnInit() {
+    this.menuItems = this.cafeService.getMenu();
+  }
+
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      this.cafeService.addOrder(this.formData);
+      alert('Order successfully submitted!');
+      form.resetForm();
+    }
+  }
+}</div>
+
+            <!-- Tab 4: Viva Questions -->
+            <div class="code-view" ng-show="activeTab === 'viva'">LAB VIVA QUICK REVISION - WEEKS 13 & 14:
+
+Q1: What are Angular Forms, and what types are available?
+A: Angular provides two approaches for handling user input through forms:
+   1. Template-Driven Forms: Simple, logic defined in template with [(ngModel)] and directives.
+   2. Reactive (Model-Driven) Forms: More scalable, defined in component class using FormGroup and FormControl.
+
+Q2: What do form control states ($valid, $invalid, $touched, $dirty, $pristine) mean?
+A:
+- valid / invalid: Indicates whether all validation rules (required, minlength, email) pass.
+- touched / untouched: Indicates whether the user has focused and left the field.
+- dirty / pristine: Indicates whether the field value has been modified by the user.
+
+Q3: What is Angular Routing and what is &lt;router-outlet&gt;?
+A: Angular Routing enables navigation between views in a Single-Page Application (SPA) without reloading the full page.
+&lt;router-outlet&gt; acts as a placeholder directive that Angular dynamically fills based on the current router state.
+
+Q4: What is an Angular Service and why use Dependency Injection (DI)?
+A: An Angular Service is a class with @Injectable() that encapsulates business logic, data access, and cross-component communication.
+Dependency Injection provides singleton instances of services to components without manual instantiation, promoting modularity, reusability, and clean architecture.</div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE ☕ Cafe. All Rights Reserved.</p>
+</footer>
+
+<!-- Angular Application & Service Simulation -->
+<script>
+    var app = angular.module("spaApp", []);
+
+    // 1. Angular Service singleton
+    app.service("CafeService", function() {
+        var cafeInfo = {
+            name: "THE WAVE ☕ Cafe",
+            address: "123 Coffee Street, Downtown, Hyderabad",
+            phone: "+91 98765 43210",
+            email: "contact@thewavecafe.com",
+            openHours: "8:00 AM - 10:00 PM Daily"
+        };
+
+        var menu = [
+            { id: 1, name: "Cappuccino", category: "Hot Coffee", price: 120, desc: "Creamy espresso with velvety milk froth" },
+            { id: 2, name: "Latte", category: "Hot Coffee", price: 140, desc: "Steamed milk poured over smooth espresso" },
+            { id: 3, name: "Cold Brew Coffee", category: "Cold Coffee", price: 150, desc: "Slow-steeped artisan iced blend" },
+            { id: 4, name: "Wood-Fired Pizza", category: "Snacks", price: 250, desc: "Crispy crust with mozzarella and basil" },
+            { id: 5, name: "Artisan Croissant", category: "Bakery", price: 100, desc: "Golden flaky French pastry baked daily" },
+            { id: 6, name: "Dark Chocolate Cake", category: "Desserts", price: 180, desc: "Decadent Belgian cocoa layered sponge" },
+            { id: 7, name: "Masala Chai", category: "Hot Coffee", price: 80, desc: "Freshly brewed Assam tea with crushed spices" }
+        ];
+
+        var orders = [
+            { id: 101, customerName: "Aarav Sharma", email: "aarav@example.com", phone: "9876543210", itemName: "Cappuccino", quantity: 2, tableNumber: 4, orderTotal: 240, timestamp: "Today, 10:15 AM" },
+            { id: 102, customerName: "Priya Patel", email: "priya@example.com", phone: "9812345678", itemName: "Cold Brew Coffee", quantity: 1, tableNumber: 7, orderTotal: 150, timestamp: "Today, 11:30 AM" }
+        ];
+
+        return {
+            getCafeInfo: function() { return cafeInfo; },
+            getMenu: function() { return menu; },
+            getSpecialties: function() { return menu.slice(0, 4); },
+            getOrders: function() { return orders; },
+            addOrder: function(orderData) {
+                var itemObj = menu.find(function(m) { return m.name === orderData.itemName; });
+                var unitPrice = itemObj ? itemObj.price : 100;
+                var total = unitPrice * (orderData.quantity || 1);
+
+                var newOrder = {
+                    id: 100 + orders.length + 1,
+                    customerName: orderData.customerName,
+                    email: orderData.email,
+                    phone: orderData.phone,
+                    itemName: orderData.itemName,
+                    quantity: orderData.quantity,
+                    tableNumber: orderData.tableNumber,
+                    orderTotal: total,
+                    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                };
+                orders.unshift(newOrder);
+                return newOrder;
+            }
+        };
+    });
+
+    // 2. SPA Controller with Injected CafeService
+    app.controller("SpaController", function($scope, CafeService) {
+        $scope.currentRoute = "home";
+        $scope.activeTab = "service";
+
+        // Injected service data
+        $scope.cafeInfo = CafeService.getCafeInfo();
+        $scope.menu = CafeService.getMenu();
+        $scope.specialties = CafeService.getSpecialties();
+        $scope.orders = CafeService.getOrders();
+
+        $scope.orderData = {
+            customerName: "",
+            email: "",
+            phone: "",
+            itemName: "Cappuccino",
+            quantity: 1,
+            tableNumber: 3,
+            specialNotes: ""
+        };
+
+        // SPA Navigation method (simulating router-outlet)
+        $scope.navigate = function(route) {
+            $scope.currentRoute = route;
+        };
+
+        // Quick order from menu table
+        $scope.quickOrder = function(item) {
+            $scope.orderData.itemName = item.name;
+            $scope.currentRoute = "order";
+        };
+
+        // Submit form handler
+        $scope.submitOrder = function(form) {
+            if (form.$valid) {
+                var added = CafeService.addOrder($scope.orderData);
+                alert("✅ Success! Order #" + added.id + " placed for " + added.customerName +
+                      " (Total: ₹" + added.orderTotal + "). Added to Orders Dashboard!");
+                
+                // Reset form state
+                $scope.orderData = {
+                    customerName: "",
+                    email: "",
+                    phone: "",
+                    itemName: "Cappuccino",
+                    quantity: 1,
+                    tableNumber: 3,
+                    specialNotes: ""
+                };
+                form.$setPristine();
+                form.$setUntouched();
+
+                // Route to dashboard to see new order immediately
+                $scope.currentRoute = "dashboard";
+            }
+        };
+    });
+</script>
+
+</body>
+</html>

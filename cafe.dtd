@@ -1,0 +1,23 @@
+
+<!ELEMENT cafe (name, description, contact, openingHours, catalogue)>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+
+<!ELEMENT contact (address, phone, email)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT phone (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+
+<!ELEMENT openingHours (day+)>
+<!ELEMENT day (hours)>
+<!ATTLIST day
+    name CDATA #REQUIRED
+>
+
+<!ELEMENT hours (#PCDATA)>
+
+<!ELEMENT catalogue (item+)>
+
+<!ELEMENT item (name, description, price)>
+<!ELEMENT price (#PCDATA)>

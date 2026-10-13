@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE 🌊 Cafe - TypeScript Demo (Week 11)</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .demo-container {
+            max-width: 900px;
+            margin: 25px auto;
+            text-align: left;
+        }
+        .code-box {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 18px;
+            border-radius: 8px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        .invoice-box {
+            background-color: #0f172a;
+            color: #38bdf8;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            white-space: pre;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>THE WAVE 🌊 Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html" class="active">TypeScript (W11)</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Week 11: TypeScript Classes, Interfaces & Functions</h2>
+    <p class="subtext">Strongly typed object-oriented model for cafe billing, membership calculations, and invoicing.</p>
+
+    <div class="demo-container">
+        <div class="card" style="max-width: 100%;">
+            <h3 style="text-align: left;">Live TypeScript Execution</h3>
+            <p style="color: #64748b; font-size: 14px;">
+                Implemented in <code>cafe.ts</code> and transpiled to <code>cafe.js</code>. Click below to execute the billing algorithm live in your browser:
+            </p>
+
+            <button class="btn-primary" onclick="executeTypeScript()">
+                ▶ Run TypeScript Cafe Billing Algorithm
+            </button>
+
+            <div id="invoiceOutput" class="invoice-box" style="display: none;"></div>
+        </div>
+
+        <div class="card" style="max-width: 100%; margin-top: 25px;">
+            <h3 style="text-align: left;">TypeScript Source Code Overview (cafe.ts)</h3>
+            <div class="code-box">
+// 1. Interfaces
+interface IMenuItem { id: number; name: string; category: string; price: number; }
+interface ICustomer { name: string; email: string; membership: "Regular" | "Premium" | "VIP"; }
+
+// 2. Classes
+class MenuItem implements IMenuItem { ... }
+class Customer implements ICustomer {
+    getDiscountRate(): number {
+        return this.membership === "VIP" ? 0.20 : this.membership === "Premium" ? 0.10 : 0.00;
+    }
+}
+class CafeOrder {
+    addItem(item: IMenuItem, qty: number): void { ... }
+    calculateSummary(): IOrderSummary { ... }
+    generateInvoice(): string { ... }
+}
+
+// 3. Functions
+function calculateSubtotal(items: ICartItem[]): number { ... }
+function applyDiscount(subtotal: number, rate: number): number { ... }
+function calculateTax(amount: number, taxRate: number = 0.05): number { ... }
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE 🌊 Cafe. All Rights Reserved.</p>
+</footer>
+
+<script src="cafe.js"></script>
+<script>
+    function executeTypeScript() {
+        const out = document.getElementById("invoiceOutput");
+        out.style.display = "block";
+        const receipt = runDemo();
+        out.textContent = receipt;
+    }
+</script>
+
+</body>
+</html>

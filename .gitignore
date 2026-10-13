@@ -1,0 +1,12 @@
+# Dependency & build directories
+node_modules/
+dist/
+.dist/
+*.pyc
+__pycache__/
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

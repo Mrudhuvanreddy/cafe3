@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="cafe.css"?>
+
+<!DOCTYPE cafe SYSTEM "cafe.dtd">
+
+<!-- Week 6: XML file displaying Cafe Information validated against cafe.dtd -->
+<cafe>
+    <name>THE WAVE 🌊 Cafe</name>
+    <description>Fresh Coffee • Delicious Food • Cozy Atmosphere</description>
+
+    <contact>
+        <address>123 Coffee Street, Downtown</address>
+        <phone>+91 98765 43210</phone>
+        <email>info@thewavecafe.com</email>
+    </contact>
+
+    <openingHours>
+        <day name="Monday - Friday">
+            <hours>8:00 AM - 9:00 PM</hours>
+        </day>
+        <day name="Saturday">
+            <hours>9:00 AM - 10:00 PM</hours>
+        </day>
+        <day name="Sunday">
+            <hours>9:00 AM - 8:00 PM</hours>
+        </day>
+    </openingHours>
+
+    <catalogue>
+        <item>
+            <name>☕ Cappuccino</name>
+            <description>Hot and creamy coffee</description>
+            <price>120</price>
+        </item>
+
+        <item>
+            <name>☕ Latte</name>
+            <description>Fresh milk coffee</description>
+            <price>140</price>
+        </item>
+
+        <item>
+            <name>🧋 Cold Coffee</name>
+            <description>Chilled creamy coffee</description>
+            <price>150</price>
+        </item>
+
+        <item>
+            <name>🥐 Croissant</name>
+            <description>Fresh buttery croissant</description>
+            <price>100</price>
+        </item>
+
+        <item>
+            <name>🍕 Pizza</name>
+            <description>Cheesy vegetable pizza</description>
+            <price>250</price>
+        </item>
+
+        <item>
+            <name>🥪 Sandwich</name>
+            <description>Fresh cheese sandwich</description>
+            <price>160</price>
+        </item>
+
+        <item>
+            <name>🍰 Chocolate Cake</name>
+            <description>Soft chocolate cake</description>
+            <price>180</price>
+        </item>
+
+        <item>
+            <name>🍵 Tea</name>
+            <description>Freshly brewed tea</description>
+            <price>80</price>
+        </item>
+    </catalogue>
+</cafe>

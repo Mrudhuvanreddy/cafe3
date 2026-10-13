@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE 🌊 Cafe - Details</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>THE WAVE 🌊 Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript (W11)</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Cafe Details & Remote API Test</h2>
+    <p class="subtext">Fetch live cafe profile and operating metadata.</p>
+
+    <div class="card" style="text-align: center;">
+        <button class="btn-primary" onclick="getCafe()">Get Live Cafe Details</button>
+        <div id="result" class="message-box" style="margin-top: 20px; text-align: left;"></div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE 🌊 Cafe. All Rights Reserved.</p>
+</footer>
+
+<script>
+function getCafe() {
+    const res = document.getElementById("result");
+    res.className = "message-box";
+    res.style.display = "block";
+    res.innerHTML = "Fetching cafe details...";
+
+    fetch("data.json")
+    .then(response => response.json())
+    .then(data => {
+        res.className = "message-box success";
+        res.innerHTML =
+            "<b>Cafe Name:</b> " + data.name + "<br>" +
+            "<b>Address:</b> " + data.location + "<br>" +
+            "<b>Speciality:</b> " + data.speciality + "<br>" +
+            "<b>Contact:</b> " + data.contact;
+    })
+    .catch(error => {
+        res.className = "message-box error";
+        res.innerHTML = "Error loading cafe details: " + error.message;
+    });
+}
+</script>
+
+</body>
+</html>

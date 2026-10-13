@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE 🌊 Cafe - Catalogue</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>THE WAVE 🌊 Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html" class="active">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript (W11)</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Our Catalogue ☕</h2>
+    <p class="subtext">Select your favorite items and add them to your cart.</p>
+
+    <!-- CAFE ITEMS (Week 5: Catalogue page with 8 items) -->
+    <div class="items">
+        <div class="item">
+            <h3>☕ Cappuccino</h3>
+            <p class="desc">Hot and creamy coffee</p>
+            <p class="price">₹120</p>
+            <button onclick="addToCart('Cappuccino', 120)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>☕ Latte</h3>
+            <p class="desc">Fresh milk coffee</p>
+            <p class="price">₹140</p>
+            <button onclick="addToCart('Latte', 140)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🧋 Cold Coffee</h3>
+            <p class="desc">Chilled creamy coffee</p>
+            <p class="price">₹150</p>
+            <button onclick="addToCart('Cold Coffee', 150)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🥐 Croissant</h3>
+            <p class="desc">Fresh buttery croissant</p>
+            <p class="price">₹100</p>
+            <button onclick="addToCart('Croissant', 100)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🍕 Pizza</h3>
+            <p class="desc">Cheesy vegetable pizza</p>
+            <p class="price">₹250</p>
+            <button onclick="addToCart('Pizza', 250)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🥪 Sandwich</h3>
+            <p class="desc">Fresh cheese sandwich</p>
+            <p class="price">₹160</p>
+            <button onclick="addToCart('Sandwich', 160)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🍰 Chocolate Cake</h3>
+            <p class="desc">Soft chocolate cake</p>
+            <p class="price">₹180</p>
+            <button onclick="addToCart('Chocolate Cake', 180)">Add to Cart</button>
+        </div>
+
+        <div class="item">
+            <h3>🍵 Tea</h3>
+            <p class="desc">Freshly brewed tea</p>
+            <p class="price">₹80</p>
+            <button onclick="addToCart('Tea', 80)">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- CART CONTAINER (Week 5: Interactive shopping cart) -->
+    <div id="cart">
+        <h3>🛒 Your Cart</h3>
+        <div id="cartItems">
+            <p>Your cart is empty.</p>
+        </div>
+        <hr>
+        <p id="total">Total: ₹0</p>
+        <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE 🌊 Cafe. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Shopping Cart State
+    let cart = [];
+
+    // Load cart from session/local storage if available
+    try {
+        const saved = localStorage.getItem("wave_cafe_cart");
+        if (saved) {
+            cart = JSON.parse(saved);
+        }
+    } catch(e) {}
+
+    // Save cart state
+    function saveCart() {
+        try {
+            localStorage.setItem("wave_cafe_cart", JSON.stringify(cart));
+        } catch(e) {}
+    }
+
+    // Add item to cart
+    function addToCart(name, price) {
+        let existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                quantity: 1
+            });
+        }
+        saveCart();
+        displayCart();
+    }
+
+    // Render cart items
+    function displayCart() {
+        let cartItems = document.getElementById("cartItems");
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = "<p>Your cart is empty.</p>";
+            document.getElementById("total").textContent = "Total: ₹0";
+            return;
+        }
+
+        let html = "";
+        cart.forEach(function(item, index) {
+            let itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            html += `
+                <p>
+                    <b>${item.name}</b> - ₹${item.price} × ${item.quantity} = ₹${itemTotal}
+                    <button class="btn-small" onclick="increaseItem(${index})">+</button>
+                    <button class="btn-small" onclick="decreaseItem(${index})">-</button>
+                    <button class="btn-small" style="color: #b91c1c;" onclick="removeItem(${index})">Remove</button>
+                </p>
+            `;
+        });
+
+        cartItems.innerHTML = html;
+        document.getElementById("total").textContent = "Total: ₹" + total;
+    }
+
+    // Increase item quantity
+    function increaseItem(index) {
+        cart[index].quantity++;
+        saveCart();
+        displayCart();
+    }
+
+    // Decrease item quantity
+    function decreaseItem(index) {
+        if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+        } else {
+            cart.splice(index, 1);
+        }
+        saveCart();
+        displayCart();
+    }
+
+    // Remove single item
+    function removeItem(index) {
+        cart.splice(index, 1);
+        saveCart();
+        displayCart();
+    }
+
+    // Clear entire cart
+    function clearCart() {
+        cart = [];
+        saveCart();
+        displayCart();
+    }
+
+    // Initial render
+    displayCart();
+</script>
+
+</body>
+</html>

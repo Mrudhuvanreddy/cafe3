@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "the-wave-cafe": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": ".",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist",
+            "index": "week13-14.html",
+            "browser": "week13-14.component.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.json",
+            "inlineStyleLanguage": "css",
+            "styles": ["style.css"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}

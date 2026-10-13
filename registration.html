@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE 🌊 Cafe - Registration</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Week 3: Internal CSS Demonstration -->
+    <style>
+        .register-card {
+            max-width: 520px;
+            margin: 30px auto;
+        }
+        .radio-group {
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+        .radio-option {
+            margin-right: 18px;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .radio-option input {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+        .terms-wrap {
+            margin: 18px 0;
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+        }
+        .terms-wrap input {
+            margin-right: 8px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>THE WAVE 🌊 Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html" class="active">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript (W11)</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Week 2: Registration Page using HTML forms with basic input validations -->
+    <!-- Week 3: Inline CSS Demonstration applied on container style below -->
+    <div class="card register-card" style="box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);">
+        <h2>Cafe Registration Form</h2>
+        <p class="card-desc">Join our cafe club to earn reward points, discounts, and exclusive seasonal offers.</p>
+
+        <form id="cafeForm" novalidate>
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullname">Full Name *</label>
+                <input type="text" id="fullname" placeholder="Enter your full name" required>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="Enter your email (e.g. name@example.com)" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" placeholder="Enter 10-digit mobile number" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label>Gender *</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="gender" value="Male"> Male
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="gender" value="Female"> Female
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="gender" value="Other"> Other
+                    </label>
+                </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+
+            <!-- Favorite Beverage -->
+            <div class="form-group">
+                <label for="beverage">Favorite Beverage *</label>
+                <select id="beverage" required>
+                    <option value="">-- Select Your Favorite --</option>
+                    <option value="Cappuccino">☕ Cappuccino</option>
+                    <option value="Latte">☕ Latte</option>
+                    <option value="Cold Coffee">🧋 Cold Coffee</option>
+                    <option value="Tea">🍵 Tea</option>
+                    <option value="Espresso">☕ Espresso</option>
+                    <option value="Hot Chocolate">🍫 Hot Chocolate</option>
+                </select>
+            </div>
+
+            <!-- Membership Type -->
+            <div class="form-group">
+                <label>Membership Type *</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="membership" value="Regular"> Regular
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="membership" value="Premium"> Premium (10% Off)
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="membership" value="VIP"> VIP (20% Off)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" rows="3" placeholder="Enter your street or campus address"></textarea>
+            </div>
+
+            <!-- Preferred Visit Time -->
+            <div class="form-group">
+                <label for="visitTime">Preferred Visit Time</label>
+                <input type="time" id="visitTime">
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="terms-wrap">
+                <input type="checkbox" id="terms" required>
+                <label for="terms" class="inline-label" style="margin: 0;">
+                    I agree to THE WAVE Cafe's terms and privacy conditions.
+                </label>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <input type="submit" value="Register" class="btn-primary" style="flex: 1;">
+                <input type="reset" value="Clear" class="btn-secondary" style="flex: 1;">
+            </div>
+
+            <!-- Status Message Box -->
+            <div id="registerMessage" class="message-box"></div>
+
+            <div class="form-footer-link">
+                Already registered? <a href="login.html">Login here</a>
+            </div>
+
+            <div class="form-footer-link">
+                <a href="index.html">← Back to Home</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE 🌊 Cafe. All Rights Reserved.</p>
+</footer>
+
+<!-- Week 4: JavaScript programs to validate registration fields -->
+<script>
+    const form = document.getElementById("cafeForm");
+    const msgBox = document.getElementById("registerMessage");
+
+    function showError(message) {
+        msgBox.className = "message-box error";
+        msgBox.textContent = message;
+    }
+
+    function showSuccess(message) {
+        msgBox.className = "message-box success";
+        msgBox.textContent = message;
+    }
+
+    form.onsubmit = function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("fullname").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const beverage = document.getElementById("beverage").value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const membership = document.querySelector('input[name="membership"]:checked');
+        const terms = document.getElementById("terms").checked;
+
+        // 1. Validate Name (non-empty, letters & spaces only, at least 3 characters)
+        if (name === "") {
+            showError("Please enter your full name.");
+            document.getElementById("fullname").focus();
+            return;
+        }
+        if (!/^[a-zA-Z\s]{3,40}$/.test(name)) {
+            showError("Full name should only contain letters and be at least 3 characters.");
+            document.getElementById("fullname").focus();
+            return;
+        }
+
+        // 2. Validate Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email === "" || !emailRegex.test(email)) {
+            showError("Please enter a valid email address (e.g., student@domain.com).");
+            document.getElementById("email").focus();
+            return;
+        }
+
+        // 3. Validate Phone (10 digits)
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            showError("Please enter a valid 10-digit mobile number.");
+            document.getElementById("phone").focus();
+            return;
+        }
+
+        // 4. Validate Gender
+        if (!gender) {
+            showError("Please select your gender.");
+            return;
+        }
+
+        // 5. Validate Favorite Beverage
+        if (beverage === "") {
+            showError("Please choose your favorite beverage from the list.");
+            document.getElementById("beverage").focus();
+            return;
+        }
+
+        // 6. Validate Membership
+        if (!membership) {
+            showError("Please select a membership type.");
+            return;
+        }
+
+        // 7. Validate Terms
+        if (!terms) {
+            showError("You must agree to the terms and conditions to register.");
+            return;
+        }
+
+        // Success state
+        showSuccess("Registration successful! Welcome to THE WAVE 🌊 Cafe, " + name + " ☕");
+
+        // Save simulated registered user in localStorage
+        const userData = {
+            name: name,
+            email: email,
+            phone: phone,
+            beverage: beverage,
+            membership: membership.value
+        };
+        localStorage.setItem("wave_cafe_member", JSON.stringify(userData));
+
+        // Friendly redirect to login page in the same website after 1.5 seconds
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+    };
+
+    form.onreset = function() {
+        msgBox.className = "message-box";
+        msgBox.textContent = "";
+    };
+</script>
+
+</body>
+</html>

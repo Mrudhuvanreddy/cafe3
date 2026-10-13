@@ -1,0 +1,16 @@
+{
+  "name": "THE WAVE 🌊 Cafe",
+  "location": "123 Coffee Street, Downtown, Hyderabad",
+  "speciality": "Fresh Roasted Artisan Coffee & Pastries",
+  "contact": "+91 98765 43210",
+  "menu": [
+    { "id": 1, "name": "Cappuccino", "price": 120, "category": "Hot Coffee", "desc": "Hot and creamy espresso coffee" },
+    { "id": 2, "name": "Latte", "price": 140, "category": "Hot Coffee", "desc": "Fresh steamed milk with smooth espresso" },
+    { "id": 3, "name": "Cold Coffee", "price": 150, "category": "Cold Coffee", "desc": "Chilled rich creamy iced coffee" },
+    { "id": 4, "name": "Croissant", "price": 100, "category": "Bakery", "desc": "Golden flaky buttery pastry" },
+    { "id": 5, "name": "Pizza", "price": 250, "category": "Snacks", "desc": "Cheesy vegetable crust pizza" },
+    { "id": 6, "name": "Sandwich", "price": 160, "category": "Snacks", "desc": "Fresh grilled cheese sandwich" },
+    { "id": 7, "name": "Chocolate Cake", "price": 180, "category": "Desserts", "desc": "Rich dark chocolate moist cake" },
+    { "id": 8, "name": "Tea", "price": 80, "category": "Beverages", "desc": "Freshly brewed aromatic masala tea" }
+  ]
+}

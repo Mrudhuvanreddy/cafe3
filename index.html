@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WAVE ☕ Cafe - Home</title>
+    <!-- Week 3: External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Week 3: Internal CSS Demonstration -->
+    <style>
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .hero-banner {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 1100px;
+            margin: 0 auto 25px auto;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        .hero-banner h2 {
+            color: #0077b6;
+            margin-top: 0;
+            font-size: 26px;
+        }
+        .hero-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .hero-actions a {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .specialty-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 10px 0;
+        }
+        .specialty-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e5e7eb;
+            font-size: 14px;
+        }
+        .specialty-list li:last-child {
+            border-bottom: none;
+        }
+        .ajax-box {
+            background-color: #f9fafb;
+            border: 1px dashed #cbd5e1;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+            white-space: pre-wrap;
+        }
+        .lab-badge {
+            display: inline-block;
+            background: #0077b6;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+        .angular-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .angular-card h3 {
+            margin-top: 0;
+            color: #0369a1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with complete navigation for Weeks 1 to 14 -->
+<header>
+    <h1>THE WAVE ☕ Cafe</h1>
+    <p class="tagline">Fresh Coffee • Delicious Food • Cozy Atmosphere</p>
+    <nav>
+        <a href="index.html" class="active">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="registration.html">Register</a> |
+        <a href="catalogue.html">Catalogue</a> |
+        <a href="cafe.xml">XML/DTD</a> |
+        <a href="json.html">JSON</a> |
+        <a href="post.html">POST</a> |
+        <a href="typescript-demo.html">TypeScript (W11)</a> |
+        <a href="week12.html">Angular (W12)</a> |
+        <a href="week13-14.html">Angular SPA (W13-14)</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Hero Introduction -->
+    <div class="hero-banner">
+        <h2>Welcome to THE WAVE Cafe ☕</h2>
+        <p style="font-size: 15px; color: #4b5563; max-width: 800px; margin: 10px auto; line-height: 1.6;">
+            Essentials of Web Programming Laboratory (Weeks 1 to 14). Fully implemented in a unified structure featuring HTML5, CSS3, JavaScript, XML/DTD, AJAX, Fetch API, TypeScript, and Angular Single-Page Application.
+        </p>
+
+        <!-- Action Links -->
+        <div class="hero-actions">
+            <a href="catalogue.html" class="btn-primary" style="padding: 10px 22px; font-size: 14px;">Explore Catalogue 📋</a>
+            <a href="week12.html" class="btn-secondary" style="padding: 10px 22px; font-size: 14px; background: #0284c7; color: white;">⚡ Week 12: Angular Components</a>
+            <a href="week13-14.html" class="btn-secondary" style="padding: 10px 22px; font-size: 14px; background: #0369a1; color: white;">🚀 Weeks 13-14: Angular SPA</a>
+        </div>
+    </div>
+
+    <!-- Multi-section Grid -->
+    <div class="home-grid">
+        
+        <!-- Week 12 Featured Card -->
+        <div class="angular-card">
+            <span class="lab-badge">Week 12 Experiment</span>
+            <h3>Angular Components, Binding & Directives</h3>
+            <p style="font-size: 13px; color: #334155; line-height: 1.5;">
+                Demonstrates Angular Components, Interpolation <code>{{ '{{ }}' }}</code>, Property Binding <code>[disabled]</code>, Event Binding <code>(click)</code>, Two-Way Data Binding <code>[(ngModel)]</code>, and Directives (<code>*ngIf</code>, <code>*ngFor</code>, <code>*ngSwitch</code>, <code>[ngClass]</code>).
+            </p>
+            <a href="week12.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
+                Open Week 12 Interactive Demo →
+            </a>
+        </div>
+
+        <!-- Week 13-14 Featured Card -->
+        <div class="angular-card">
+            <span class="lab-badge">Weeks 13-14 Experiment</span>
+            <h3>Angular Forms, Routing & Services (SPA)</h3>
+            <p style="font-size: 13px; color: #334155; line-height: 1.5;">
+                Demonstrates Single-Page Application (SPA) with Angular Routing (<code>&lt;router-outlet&gt;</code>), Singleton Service (<code>@Injectable CafeService</code>) with Dependency Injection, and Template-Driven Forms with live validation states.
+            </p>
+            <a href="week13-14.html" class="btn-primary" style="display: block; text-align: center; text-decoration: none; margin-top: 15px;">
+                Open Weeks 13-14 SPA Demo →
+            </a>
+        </div>
+
+        <!-- Section 1: Specialties -->
+        <div class="card" style="margin: 0; max-width: 100%;">
+            <h3 style="text-align: left;">Our Specialties</h3>
+            <ul class="specialty-list">
+                <li>☕ <b>Freshly Brewed Coffee</b> - Single-origin Arabica beans</li>
+                <li>🥐 <b>Croissants & Pastries</b> - Baked fresh daily</li>
+                <li>🍕 <b>Cheesy Pizzas & Sandwiches</b> - Gourmet wood-fired snacks</li>
+                <li>🍰 <b>Cakes & Desserts</b> - Decadent chocolate treats</li>
+                <li>🧊 <b>Cold Brews & Beverages</b> - Iced refreshments</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Opening Hours -->
+        <div class="card" style="margin: 0; max-width: 100%;">
+            <h3 style="text-align: left;">Opening Hours</h3>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday - Friday</td>
+                        <td>8:00 AM - 9:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td>9:00 AM - 10:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Sunday</td>
+                        <td>9:00 AM - 8:00 PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 3: Contact & Location -->
+        <div class="card" style="margin: 0; max-width: 100%;">
+            <h3 style="text-align: left;">Contact & Location</h3>
+            <p style="font-size: 14px; margin: 8px 0;"><b>Address:</b> 123 Coffee Street, Downtown, Hyderabad</p>
+            <p style="font-size: 14px; margin: 8px 0;"><b>Phone:</b> +91 98765 43210</p>
+            <p style="font-size: 14px; margin: 8px 0;"><b>Email:</b> hello@thewavecafe.com</p>
+            <p style="font-size: 14px; margin: 8px 0;"><b>Wi-Fi:</b> Free High-Speed Guest Wi-Fi available!</p>
+        </div>
+
+        <!-- Section 4: Week 8 Experiment: Async Text Loading -->
+        <div class="card" style="margin: 0; max-width: 100%;">
+            <span class="lab-badge" style="background: #475569;">Week 8 Experiment</span>
+            <h3 style="text-align: left; margin-top: 4px;">Asynchronous Data Loading</h3>
+            <p style="font-size: 13px; color: #64748b; margin-top: 4px;">
+                Demonstrates AJAX / Fetch API loading external text data asynchronously from <code>message.txt</code> without page reload.
+            </p>
+            <button class="btn-primary" onclick="loadText()" style="width: 100%;">
+                Load Cafe Information (Fetch API)
+            </button>
+            <div id="textData" class="ajax-box">Click the button above to load text asynchronously from message.txt</div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 THE WAVE ☕ Cafe. All Rights Reserved.</p>
+</footer>
+
+<!-- Week 8: Asynchronous Text Loading Script -->
+<script>
+function loadText() {
+    const textDataElem = document.getElementById("textData");
+    textDataElem.innerText = "Loading data asynchronously...";
+
+    fetch("message.txt")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status + ": Could not read message.txt");
+            }
+            return response.text();
+        })
+        .then(data => {
+            textDataElem.innerText = data;
+        })
+        .catch(error => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "message.txt", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 || xhr.status === 0) {
+                        textDataElem.innerText = xhr.responseText;
+                    } else {
+                        textDataElem.innerText = "THE WAVE ☕ Cafe\n123 Coffee Street, Downtown, Hyderabad\nSpeciality: Fresh Roasted Single-Origin Arabica & Artisan Pastries\nOpen Daily: 8:00 AM - 10:00 PM.";
+                    }
+                }
+            };
+            xhr.onerror = function() {
+                textDataElem.innerText = "THE WAVE ☕ Cafe\n123 Coffee Street, Downtown, Hyderabad\nOpen Daily: 8:00 AM - 10:00 PM.";
+            };
+            xhr.send();
+        });
+}
+</script>
+
+</body>
+</html>
